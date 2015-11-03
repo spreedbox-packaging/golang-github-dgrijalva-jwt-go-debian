@@ -1,0 +1,181 @@
+Description: Modify test fixture paths 
+ The Debian packging process executes Go tests in a subdirectory
+ which is not handled correctly.  The path to each test fixture
+ file has been updated to reflect this
+Author: Tim Potter <tpot@hpe.com>
+Forwarded: no
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+Index: golang-github-dgrijalva-jwt-go/jwt_test.go
+===================================================================
+--- golang-github-dgrijalva-jwt-go.orig/jwt_test.go
++++ golang-github-dgrijalva-jwt-go/jwt_test.go
+@@ -94,13 +94,13 @@ var jwtTestData = []struct {
+ 
+ func init() {
+ 	var e error
+-	if jwtTestDefaultKey, e = ioutil.ReadFile("test/sample_key.pub"); e != nil {
++	if jwtTestDefaultKey, e = ioutil.ReadFile("../../../../../test/sample_key.pub"); e != nil {
+ 		panic(e)
+ 	}
+ }
+ 
+ func makeSample(c map[string]interface{}) string {
+-	key, e := ioutil.ReadFile("test/sample_key")
++	key, e := ioutil.ReadFile("../../../../../test/sample_key")
+ 	if e != nil {
+ 		panic(e.Error())
+ 	}
+Index: golang-github-dgrijalva-jwt-go/ecdsa_test.go
+===================================================================
+--- golang-github-dgrijalva-jwt-go.orig/ecdsa_test.go
++++ golang-github-dgrijalva-jwt-go/ecdsa_test.go
+@@ -19,7 +19,7 @@ var ecdsaTestData = []struct {
+ }{
+ 	{
+ 		"Basic ES256",
+-		map[string]string{"private": "test/ec256-private.pem", "public": "test/ec256-public.pem"},
++		map[string]string{"private": "../../../../../test/ec256-private.pem", "public": "../../../../../test/ec256-public.pem"},
+ 		"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.MEQCIHoSJnmGlPaVQDqacx_2XlXEhhqtWceVopjomc2PJLtdAiAUTeGPoNYxZw0z8mgOnnIcjoxRuNDVZvybRZF3wR1l8w",
+ 		"ES256",
+ 		map[string]interface{}{"foo": "bar"},
+@@ -27,7 +27,7 @@ var ecdsaTestData = []struct {
+ 	},
+ 	{
+ 		"Basic ES384",
+-		map[string]string{"private": "test/ec384-private.pem", "public": "test/ec384-public.pem"},
++		map[string]string{"private": "../../../../../test/ec384-private.pem", "public": "../../../../../test/ec384-public.pem"},
+ 		"eyJhbGciOiJFUzM4NCIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.MGUCMQCHBr61FXDuFY9xUhyp8iWQAuBIaSgaf1z2j_8XrKcCfzTPzoSa3SZKq-m3L492xe8CMG3kafRMeuaN5Aw8ZJxmOLhkTo4D3-LaGzcaUWINvWvkwFMl7dMC863s0gov6xvXuA",
+ 		"ES384",
+ 		map[string]interface{}{"foo": "bar"},
+@@ -35,7 +35,7 @@ var ecdsaTestData = []struct {
+ 	},
+ 	{
+ 		"Basic ES512",
+-		map[string]string{"private": "test/ec512-private.pem", "public": "test/ec512-public.pem"},
++		map[string]string{"private": "../../../../../test/ec512-private.pem", "public": "../../../../../test/ec512-public.pem"},
+ 		"eyJhbGciOiJFUzUxMiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.MIGIAkIAmVKjdJE5lG1byOFgZZVTeNDRp6E7SNvUj0UrvpzoBH6nrleWVTcwfHzbwWuooNpPADDSFR_Ql3ze-Vwwi8hBqQsCQgHn-ZooL8zegkOVeEEsqd7WHWdhb8UekFCYw3X8JnNP-D3wvZQ1-tkkHakt5gZ2-xO29TxfSPun4ViGkMYa7Q4N-Q",
+ 		"ES512",
+ 		map[string]interface{}{"foo": "bar"},
+@@ -43,7 +43,7 @@ var ecdsaTestData = []struct {
+ 	},
+ 	{
+ 		"basic ES256 invalid: foo => bar",
+-		map[string]string{"private": "test/ec256-private.pem", "public": "test/ec256-public.pem"},
++		map[string]string{"private": "../../../../../test/ec256-private.pem", "public": "../../../../../test/ec256-public.pem"},
+ 		"eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJmb28iOiJiYXIifQ.MEQCIHoSJnmGlPaVQDqacx_2XlXEhhqtWceVopjomc2PJLtdAiAUTeGPoNYxZw0z8mgOnnIcjoxRuNDVZvybRZF3wR1l8W",
+ 		"ES256",
+ 		map[string]interface{}{"foo": "bar"},
+Index: golang-github-dgrijalva-jwt-go/rsa_pss_test.go
+===================================================================
+--- golang-github-dgrijalva-jwt-go.orig/rsa_pss_test.go
++++ golang-github-dgrijalva-jwt-go/rsa_pss_test.go
+@@ -51,7 +51,7 @@ var rsaPSSTestData = []struct {
+ func TestRSAPSSVerify(t *testing.T) {
+ 	var err error
+ 
+-	key, _ := ioutil.ReadFile("test/sample_key.pub")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key.pub")
+ 	var rsaPSSKey *rsa.PublicKey
+ 	if rsaPSSKey, err = jwt.ParseRSAPublicKeyFromPEM(key); err != nil {
+ 		t.Errorf("Unable to parse RSA public key: %v", err)
+@@ -74,7 +74,7 @@ func TestRSAPSSVerify(t *testing.T) {
+ func TestRSAPSSSign(t *testing.T) {
+ 	var err error
+ 
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 	var rsaPSSKey *rsa.PrivateKey
+ 	if rsaPSSKey, err = jwt.ParseRSAPrivateKeyFromPEM(key); err != nil {
+ 		t.Errorf("Unable to parse RSA private key: %v", err)
+Index: golang-github-dgrijalva-jwt-go/rsa_test.go
+===================================================================
+--- golang-github-dgrijalva-jwt-go.orig/rsa_test.go
++++ golang-github-dgrijalva-jwt-go/rsa_test.go
+@@ -45,7 +45,7 @@ var rsaTestData = []struct {
+ }
+ 
+ func TestRSAVerify(t *testing.T) {
+-	key, _ := ioutil.ReadFile("test/sample_key.pub")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key.pub")
+ 
+ 	for _, data := range rsaTestData {
+ 		parts := strings.Split(data.tokenString, ".")
+@@ -62,7 +62,7 @@ func TestRSAVerify(t *testing.T) {
+ }
+ 
+ func TestRSASign(t *testing.T) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 
+ 	for _, data := range rsaTestData {
+ 		if data.valid {
+@@ -80,7 +80,7 @@ func TestRSASign(t *testing.T) {
+ }
+ 
+ func TestRSAVerifyWithPreParsedPrivateKey(t *testing.T) {
+-	key, _ := ioutil.ReadFile("test/sample_key.pub")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key.pub")
+ 	parsedKey, err := jwt.ParseRSAPublicKeyFromPEM(key)
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -94,7 +94,7 @@ func TestRSAVerifyWithPreParsedPrivateKe
+ }
+ 
+ func TestRSAWithPreParsedPrivateKey(t *testing.T) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 	parsedKey, err := jwt.ParseRSAPrivateKeyFromPEM(key)
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -111,8 +111,8 @@ func TestRSAWithPreParsedPrivateKey(t *t
+ }
+ 
+ func TestRSAKeyParsing(t *testing.T) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
+-	pubKey, _ := ioutil.ReadFile("test/sample_key.pub")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
++	pubKey, _ := ioutil.ReadFile("../../../../../test/sample_key.pub")
+ 	badKey := []byte("All your base are belong to key")
+ 
+ 	// Test parsePrivateKey
+@@ -144,7 +144,7 @@ func TestRSAKeyParsing(t *testing.T) {
+ }
+ 
+ func BenchmarkRS256Signing(b *testing.B) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 	parsedKey, err := jwt.ParseRSAPrivateKeyFromPEM(key)
+ 	if err != nil {
+ 		b.Fatal(err)
+@@ -154,7 +154,7 @@ func BenchmarkRS256Signing(b *testing.B)
+ }
+ 
+ func BenchmarkRS384Signing(b *testing.B) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 	parsedKey, err := jwt.ParseRSAPrivateKeyFromPEM(key)
+ 	if err != nil {
+ 		b.Fatal(err)
+@@ -164,7 +164,7 @@ func BenchmarkRS384Signing(b *testing.B)
+ }
+ 
+ func BenchmarkRS512Signing(b *testing.B) {
+-	key, _ := ioutil.ReadFile("test/sample_key")
++	key, _ := ioutil.ReadFile("../../../../../test/sample_key")
+ 	parsedKey, err := jwt.ParseRSAPrivateKeyFromPEM(key)
+ 	if err != nil {
+ 		b.Fatal(err)
+Index: golang-github-dgrijalva-jwt-go/hmac_test.go
+===================================================================
+--- golang-github-dgrijalva-jwt-go.orig/hmac_test.go
++++ golang-github-dgrijalva-jwt-go/hmac_test.go
+@@ -45,7 +45,7 @@ var hmacTestData = []struct {
+ }
+ 
+ // Sample data from http://tools.ietf.org/html/draft-jones-json-web-signature-04#appendix-A.1
+-var hmacTestKey, _ = ioutil.ReadFile("test/hmacTestKey")
++var hmacTestKey, _ = ioutil.ReadFile("../../../../../test/hmacTestKey")
+ 
+ func TestHMACVerify(t *testing.T) {
+ 	for _, data := range hmacTestData {
