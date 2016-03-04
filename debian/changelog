@@ -1,3 +1,9 @@
+golang-github-dgrijalva-jwt-go (2.4.0-1) trusty; urgency=medium
+
+  * Imported Upstream version 2.4.0
+
+ -- Simon Eisenmann <simon@struktur.de>  Fri, 04 Mar 2016 18:36:30 +0100
+
 golang-github-dgrijalva-jwt-go (2.3.0-1) unstable; urgency=medium
 
   * Initial release (Closes: #803910)
