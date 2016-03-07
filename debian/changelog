@@ -1,3 +1,9 @@
+golang-github-dgrijalva-jwt-go (2.4.0-2) trusty; urgency=medium
+
+  * Added support to build with older dh-golang.
+
+ -- Simon Eisenmann <simon@struktur.de>  Mon, 07 Mar 2016 11:23:23 +0100
+
 golang-github-dgrijalva-jwt-go (2.4.0-1) trusty; urgency=medium
 
   * Imported Upstream version 2.4.0
